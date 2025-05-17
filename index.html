@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Caixinha de Avaliação - Taylor Swift</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7e6ff;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #6a0dad;
+    }
+    .song {
+      background: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin: 12px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .song a {
+      color: #1DB954;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    label {
+      display: block;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+    input[type=number] {
+      width: 60px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+    button {
+      display: block;
+      margin: 25px auto;
+      padding: 10px 25px;
+      background-color: #6a0dad;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #result {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #6a0dad;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Caixinha de Avaliação - Taylor Swift</h1>
+
+<div id="songs-container"></div>
+
+<button onclick="mostrarNotas()">Enviar Notas</button>
+
+<div id="result"></div>
+
+<script>
+  const songs = [
+    { title: "Our Song (Debut)", link: "https://open.spotify.com/track/1j6gmK6u4WNI33lMZ8dC1s" },
+    { title: "Fearless (Taylor's Version)", link: "https://open.spotify.com/track/77sMIMlNaSURUAXq5coCxE" },
+    { title: "Speak Now (Taylor's Version)", link: "https://open.spotify.com/track/5xXqyjLicvEpch72qEryFT" },
+    { title: "Red (Taylor's Version)", link: "https://open.spotify.com/track/4OAuvHryIVv4kMDNSLuPt6" },
+    { title: "Wildest Dreams (Taylor's Version)", link: "https://open.spotify.com/track/1Ov37jtRQ2YNAe8HzfczkL" },
+    { title: "Don't Blame Me (Reputation)", link: "https://open.spotify.com/track/1R0a2iXumgCiFb7HEZ7gUE" },
+    { title: "Lover (Lover)", link: "https://open.spotify.com/track/1dGr1c8CrMLDpV6mPbImSI" },
+    { title: "The 1 (Folklore)", link: "https://open.spotify.com/track/0Jlcvv8IykzHaSmj49uNW8" },
+    { title: "no body no crime (Evermore)", link: "https://open.spotify.com/track/3RaT22zZsxVYxxKR7TAaYF" },
+    { title: "Lavender Haze (Midnights)", link: "https://open.spotify.com/track/5jQI2r1RdgtuT8S3iG8zFC" },
+    { title: "The Tortured Poets Department", link: "https://open.spotify.com/track/4PdLaGZubp4lghChqp8erB" }
+  ];
+
+  const container = document.getElementById("songs-container");
+
+  songs.forEach((song, index) => {
+    const div = document.createElement("div");
+    div.classList.add("song");
+    div.innerHTML = `
+      <a href="${song.link}" target="_blank">${song.title}</a>
+      <label for="nota${index}">Sua nota (0 a 10):</label>
+      <input type="number" min="0" max="10" id="nota${index}" />
+    `;
+    container.appendChild(div);
+  });
+
+  function mostrarNotas() {
+    let notas = [];
+    let valid = true;
+
+    songs.forEach((_, index) => {
+      const notaInput = document.getElementById(`nota${index}`);
+      const valor = notaInput.value;
+
+      if (valor === "" || isNaN(valor) || valor < 0 || valor > 10) {
+        alert(`Por favor, insira uma nota válida para "${songs[index].title}" (0 a 10).`);
+        valid = false;
+        return;
+      }
+      notas.push(`${songs[index].title}: ${valor}`);
+    });
+
+    if (valid) {
+      document.getElementById("result").innerText = "Notas enviadas:\n" + notas.join("\n");
+    }
+  }
+</script>
+
+</body>
+</html>
